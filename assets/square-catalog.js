@@ -1,5 +1,5 @@
 // Replace this with your deployed Cloudflare Worker URL after setup
-const WORKER_URL = 'https://webbie-catalog.YOUR-SUBDOMAIN.workers.dev/products';
+const WORKER_URL = 'https://webbie-catalog.bywebbie.workers.dev/products';
 
 const PLACEHOLDER_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" width="64" height="64"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>`;
 
