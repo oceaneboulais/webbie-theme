@@ -8,23 +8,50 @@
   <meta property="og:description" content="Hand-illustrated, scientifically accurate, sustainably produced merch for creatures of the abyss and the stage." />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#1e2433" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>𓆝ebbie — Heavy Metal Meets Marine Biology</title>
   <link rel="stylesheet" href="assets/webbie-base.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    * { -webkit-tap-highlight-color: transparent; }
 
     .site-nav {
       position: sticky; top: 0; z-index: 50;
       background: color-mix(in oklab, var(--w-background) 80%, transparent);
       backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--w-border);
-      padding: 0 clamp(1.25rem, 5vw, 4rem);
-      display: flex; align-items: center; justify-content: space-between; height: 4rem;
+      padding: 0.5rem clamp(1.25rem, 5vw, 4rem);
+      display: flex; align-items: center; justify-content: space-between; min-height: 4rem;
     }
-    .site-nav__brand { font-family: var(--w-font-heading); font-size: 4rem; color: var(--w-bone); text-decoration: none; letter-spacing: 0.06em; }
+    .site-nav__brand { font-family: var(--w-font-heading); font-size: clamp(1.8rem, 6vw, 4rem); color: var(--w-bone); text-decoration: none; letter-spacing: 0.06em; line-height: 1; }
     .site-nav__links { display: flex; gap: 2rem; list-style: none; }
     .site-nav__links a { font-family: var(--w-font-body); font-size: 0.8rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--w-muted-fg); text-decoration: none; transition: color 0.15s; }
     .site-nav__links a:hover { color: var(--w-foreground); }
+
+    /* Hamburger */
+    .nav-toggle { display: none; background: none; border: 1px solid var(--w-border); border-radius: var(--radius); padding: 0.4rem 0.5rem; cursor: pointer; color: var(--w-muted-fg); flex-shrink: 0; }
+    .nav-toggle:focus-visible { outline: 2px solid var(--w-bio); outline-offset: 3px; }
+    /* Mobile drawer */
+    .nav-drawer { display: none; }
+    .nav-drawer.open { display: block; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 49; }
+    .nav-drawer__backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.6); }
+    .nav-drawer__panel {
+      position: absolute; top: 0; right: 0; bottom: 0; width: min(18rem, 85vw);
+      background: var(--w-abyss); border-left: 1px solid var(--w-border);
+      padding: 5rem 2rem 2rem; display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    .nav-drawer__panel a {
+      font-family: var(--w-font-body); font-size: 1rem; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--w-muted-fg); text-decoration: none;
+      padding: 0.85rem 0; border-bottom: 1px solid var(--w-border);
+      transition: color 0.15s;
+    }
+    .nav-drawer__panel a:hover { color: var(--w-bio); }
+    .nav-drawer__close { position: absolute; top: 1rem; right: 1rem; background: none; border: 1px solid var(--w-border); border-radius: 50%; width: 2.2rem; height: 2.2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--w-muted-fg); }
 
     .hero { position: relative; overflow: hidden; min-height: 70vh; display: flex; align-items: center; }
     .hero__bg { position: absolute; inset: 0; }
@@ -55,6 +82,8 @@
     .product-card:hover .product-card__img-wrap img { transform: scale(1.05); }
     .product-card__overlay { position: absolute; inset: 0; background: linear-gradient(to top, color-mix(in oklab, var(--w-background) 90%, transparent) 0%, transparent 50%); opacity: 0; transition: opacity 0.3s; display: flex; align-items: flex-end; padding: 1rem; }
     .product-card:hover .product-card__overlay { opacity: 1; }
+    /* Always show Add to Cart on touch devices */
+    @media (hover: none) { .product-card__overlay { opacity: 1; } }
     .product-card__add { width: 100%; background: var(--w-primary); color: var(--w-primary-fg); border: none; border-radius: calc(var(--radius) - 2px); padding: 0.65rem 1rem; font-family: var(--w-font-body); font-size: 0.825rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.4rem; text-decoration: none; }
     .product-card__body { padding: 1rem 1.1rem 1.25rem; display: flex; flex-direction: column; gap: 0.2rem; }
     .product-card__name { font-family: var(--w-font-heading); font-size: 1.15rem; color: var(--w-foreground); letter-spacing: 0.03em; transition: color 0.15s; }
@@ -74,7 +103,7 @@
 
     .specimens { border-top: 1px solid var(--w-border); background: color-mix(in oklab, var(--w-abyss) 50%, transparent); }
     .specimens__header { text-align: center; margin-bottom: 3rem; }
-    .specimens__track-wrap { overflow: hidden; }
+    .specimens__track-wrap { overflow: hidden; touch-action: pan-y; }
     .specimens__track { display: flex; gap: 1.5rem; transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
     .specimen-card { flex: 0 0 calc(33.333% - 1rem); border-radius: calc(var(--radius) * 1.5); border: 1px solid var(--w-border); background: var(--w-card); overflow: hidden; }
     .specimen-card__img-wrap { position: relative; aspect-ratio: 3/4; overflow: hidden; }
@@ -97,21 +126,43 @@
     .site-footer__copy { font-family: var(--w-font-body); font-size: 0.75rem; color: var(--w-muted-fg); opacity: 0.5; }
 
     @media (min-width: 64rem) { .about__grid { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 48rem) { .site-nav__links { display: none; } .specimen-card { flex-basis: calc(80% - 0.75rem); } }
+    @media (max-width: 48rem) {
+      .site-nav__links { display: none; }
+      .nav-toggle { display: flex; align-items: center; justify-content: center; }
+      .specimen-card { flex-basis: calc(82% - 0.75rem); }
+    }
     @media (max-width: 36rem) { .product-grid { grid-template-columns: 1fr; } }
+    /* Krill: pointer-coarse = touch device, skip rendering entirely */
+    @media (pointer: coarse) { .krill-layer { display: none !important; } }
   </style>
 </head>
 <body>
 
   <nav class="site-nav" aria-label="Main navigation">
     <a class="site-nav__brand" href="#">Webbie</a>
-    <ul class="site-nav__links">
+    <ul class="site-nav__links" id="nav-links">
       <li><a href="#collection">Shop</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#field-specimens">Field Specimens</a></li>
       <li><a href="#sustainability">Contact</a></li>
     </ul>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
   </nav>
+
+  <div class="nav-drawer" id="nav-drawer" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <div class="nav-drawer__backdrop" id="nav-backdrop"></div>
+    <div class="nav-drawer__panel">
+      <button class="nav-drawer__close" id="nav-close" aria-label="Close menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <a href="#collection" class="nav-drawer__link">Shop</a>
+      <a href="#about" class="nav-drawer__link">About</a>
+      <a href="#field-specimens" class="nav-drawer__link">Field Specimens</a>
+      <a href="#sustainability" class="nav-drawer__link">Contact</a>
+    </div>
+  </div>
 
   <section class="hero" aria-label="If looks could krill">
     <div class="hero__inner">
@@ -311,10 +362,26 @@
   </footer>
 
   <script>
+    // Hamburger nav
     (function () {
-      const track = document.getElementById('specimens-track');
-      const cards = track.querySelectorAll('.specimen-card');
-      let index = 0, paused = false;
+      var toggle = document.getElementById('nav-toggle');
+      var drawer = document.getElementById('nav-drawer');
+      var closeBtn = document.getElementById('nav-close');
+      var backdrop = document.getElementById('nav-backdrop');
+      function openMenu()  { drawer.classList.add('open'); toggle.setAttribute('aria-expanded','true'); document.body.style.overflow='hidden'; }
+      function closeMenu() { drawer.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }
+      toggle.addEventListener('click', openMenu);
+      closeBtn.addEventListener('click', closeMenu);
+      backdrop.addEventListener('click', closeMenu);
+      drawer.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeMenu); });
+      document.addEventListener('keydown', function(e){ if (e.key==='Escape') closeMenu(); });
+    })();
+
+    // Carousel — buttons + touch swipe
+    (function () {
+      var track = document.getElementById('specimens-track');
+      var cards = track.querySelectorAll('.specimen-card');
+      var index = 0, paused = false, touchStartX = 0;
       function goTo(i) {
         index = ((i % cards.length) + cards.length) % cards.length;
         track.style.transform = 'translateX(-' + (index * (cards[0].offsetWidth + 24)) + 'px)';
@@ -323,11 +390,17 @@
       document.getElementById('carousel-prev').addEventListener('click', function () { paused = true; goTo(index - 1); });
       track.addEventListener('mouseenter', function () { paused = true; });
       track.addEventListener('mouseleave', function () { paused = false; });
+      track.addEventListener('touchstart', function (e) { touchStartX = e.touches[0].clientX; paused = true; }, { passive: true });
+      track.addEventListener('touchend', function (e) {
+        var dx = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(dx) > 40) goTo(dx < 0 ? index + 1 : index - 1);
+      }, { passive: true });
       setInterval(function () { if (!paused) goTo(index + 1); }, 3500);
     })();
 
-    // Bioluminescent krill — positions driven by Conway's Game of Life
+    // Bioluminescent krill — GoL simulation; skipped on touch devices
     (function () {
+      if (window.matchMedia('(pointer: coarse)').matches) return;
       var COLS = 7, ROWS = 5, CELL = 26, GEN_MS = 950;
       var mouse = { x: -400, y: -400 };
       var cx = -400, cy = -400;
