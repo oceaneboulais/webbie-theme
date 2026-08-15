@@ -3,191 +3,102 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Webbie — scientifically accurate marine illustrations, hand-printed with algae ink on organic tees. Small-batch. Science-backed." />
-  <title>Webbie Theme — Preview</title>
+  <meta name="description" content="Hand-illustrated, scientifically accurate, sustainably produced merch for creatures of the abyss and the stage." />
+  <meta property="og:title" content="Webbie — Heavy Metal Meets Marine Biology" />
+  <meta property="og:description" content="Hand-illustrated, scientifically accurate, sustainably produced merch for creatures of the abyss and the stage." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <title>Webbie — Heavy Metal Meets Marine Biology</title>
   <link rel="stylesheet" href="assets/webbie-base.css" />
-  <link rel="stylesheet" href="assets/webbie-hero.css" />
-  <link rel="stylesheet" href="assets/webbie-gallery.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* ---- Nav ---- */
     .site-nav {
-      background: var(--w-abyss);
+      position: sticky; top: 0; z-index: 50;
+      background: color-mix(in oklab, var(--w-background) 80%, transparent);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--w-border);
       padding: 0 clamp(1.25rem, 5vw, 4rem);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 3.5rem;
+      display: flex; align-items: center; justify-content: space-between; height: 4rem;
     }
-    .site-nav__brand {
-      font-family: var(--w-font-heading);
-      font-size: 1.4rem;
-      color: var(--w-bone);
-      text-decoration: none;
-      letter-spacing: 0.06em;
-    }
-    .site-nav__links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-    .site-nav__links a {
-      font-family: var(--w-font-body);
-      font-size: 0.85rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: var(--w-muted-fg);
-      text-decoration: none;
-      transition: color 0.15s ease;
-    }
-    .site-nav__links a:hover { color: var(--w-bio); }
+    .site-nav__brand { font-family: var(--w-font-heading); font-size: 1.6rem; color: var(--w-bone); text-decoration: none; letter-spacing: 0.06em; }
+    .site-nav__links { display: flex; gap: 2rem; list-style: none; }
+    .site-nav__links a { font-family: var(--w-font-body); font-size: 0.8rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--w-muted-fg); text-decoration: none; transition: color 0.15s; }
+    .site-nav__links a:hover { color: var(--w-foreground); }
 
-    /* ---- Product cards (static fallback + live) ---- */
-    .product-card {
-      background: var(--w-card);
-      border-radius: var(--radius);
-      width: 220px;
-      height: 300px;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      border: 1px solid var(--w-border);
-      text-decoration: none;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
-      flex-shrink: 0;
-    }
-    .product-card:hover {
-      border-color: var(--w-bio);
-      box-shadow: 0 0 18px color-mix(in oklab, var(--w-bio) 20%, transparent);
-    }
-    .product-card__img {
-      width: 100%;
-      flex: 1;
-      object-fit: cover;
-      background: var(--w-kelp);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .product-card__img svg { opacity: 0.2; }
-    .product-card__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .product-card__info {
-      padding: 0.85rem 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-    }
-    .product-card__name {
-      font-family: var(--w-font-heading);
-      font-size: 1rem;
-      color: var(--w-bone);
-      letter-spacing: 0.04em;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .product-card__price {
-      font-family: var(--w-font-body);
-      font-size: 0.85rem;
-      color: var(--w-bio);
-    }
-    .product-card__sold-out {
-      font-family: var(--w-font-body);
-      font-size: 0.7rem;
-      color: var(--w-rust);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
+    .hero { position: relative; overflow: hidden; min-height: 70vh; display: flex; align-items: center; }
+    .hero__bg { position: absolute; inset: 0; }
+    .hero__bg img { width: 100%; height: 100%; object-fit: cover; }
+    .hero__bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, var(--w-background) 35%, color-mix(in oklab, var(--w-background) 70%, transparent) 60%, color-mix(in oklab, var(--w-background) 40%, transparent) 100%), linear-gradient(to top, var(--w-background) 0%, transparent 40%); }
+    .hero__inner { position: relative; max-width: 80rem; margin: 0 auto; width: 100%; padding: clamp(4rem, 8vw, 6rem) clamp(1.25rem, 5vw, 4rem); }
+    .hero__eyebrow { font-family: var(--w-font-body); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: var(--w-primary); margin-bottom: 1rem; }
+    .hero__heading { font-family: var(--w-font-heading); font-size: clamp(3.5rem, 9vw, 7rem); line-height: 0.95; letter-spacing: 0.02em; color: var(--w-bone); max-width: 20ch; margin-bottom: 1.5rem; }
+    .hero__heading .accent { color: var(--w-primary); }
+    .hero__sub { font-family: var(--w-font-body); font-size: clamp(1rem, 1.5vw, 1.2rem); line-height: 1.6; color: var(--w-parchment); max-width: 36rem; margin-bottom: 2rem; opacity: 0.9; }
+    .hero__actions { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .btn-primary { display: inline-flex; align-items: center; justify-content: center; background: var(--w-primary); color: var(--w-primary-fg); border: 1px solid var(--w-rust); border-radius: var(--radius); padding: 0.8rem 1.6rem; font-family: var(--w-font-body); font-size: 0.875rem; font-weight: 600; letter-spacing: 0.04em; text-decoration: none; transition: background-color 0.2s, box-shadow 0.2s; }
+    .btn-primary:hover { background: color-mix(in oklab, var(--w-primary) 85%, black); box-shadow: 0 0 18px color-mix(in oklab, var(--w-bio) 30%, transparent); }
+    .btn-secondary { display: inline-flex; align-items: center; justify-content: center; background: color-mix(in oklab, var(--w-background) 50%, transparent); color: var(--w-foreground); border: 1px solid var(--w-border); border-radius: var(--radius); padding: 0.8rem 1.6rem; font-family: var(--w-font-body); font-size: 0.875rem; font-weight: 600; letter-spacing: 0.04em; text-decoration: none; backdrop-filter: blur(4px); transition: background-color 0.2s; }
+    .btn-secondary:hover { background: var(--w-secondary); }
 
-    /* ---- Features strip ---- */
-    .features {
-      background: var(--w-card);
-      border-top: 1px solid var(--w-border);
-      border-bottom: 1px solid var(--w-border);
-      padding: clamp(2rem, 4vw, 3.5rem) clamp(1.25rem, 5vw, 4rem);
-    }
-    .features__grid {
-      max-width: 1240px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 2rem;
-    }
-    .feature {
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-    .feature__icon {
-      font-size: 1.6rem;
-      line-height: 1;
-    }
-    .feature__title {
-      font-family: var(--w-font-heading);
-      font-size: 1.1rem;
-      color: var(--w-bone);
-      letter-spacing: 0.04em;
-    }
-    .feature__body {
-      font-family: var(--w-font-body);
-      font-size: 0.9rem;
-      color: var(--w-muted-fg);
-      line-height: 1.55;
-    }
+    .section-inner { max-width: 80rem; margin: 0 auto; padding: clamp(3rem, 6vw, 6rem) clamp(1.25rem, 5vw, 4rem); }
+    .section-eyebrow { font-family: var(--w-font-body); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: var(--w-bio); margin-bottom: 0.5rem; }
+    .section-heading { font-family: var(--w-font-heading); font-size: clamp(2rem, 4vw, 3.2rem); color: var(--w-bone); letter-spacing: 0.02em; text-shadow: 0 0 24px color-mix(in oklab, var(--w-bio) 25%, transparent); }
+    .section-sub { font-family: var(--w-font-body); font-size: 0.95rem; color: var(--w-muted-fg); margin-top: 0.4rem; }
 
-    /* ---- Footer ---- */
-    .site-footer {
-      background: var(--w-ink);
-      border-top: 1px solid var(--w-border);
-      padding: clamp(2rem, 4vw, 3rem) clamp(1.25rem, 5vw, 4rem);
-      text-align: center;
-    }
-    .site-footer__brand {
-      font-family: var(--w-font-heading);
-      font-size: 1.6rem;
-      color: var(--w-bone);
-      letter-spacing: 0.06em;
-      margin-bottom: 0.75rem;
-    }
-    .site-footer__tagline {
-      font-family: var(--w-font-body);
-      font-size: 0.85rem;
-      color: var(--w-muted-fg);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-    }
-    .site-footer__links {
-      display: flex;
-      gap: 2rem;
-      justify-content: center;
-      list-style: none;
-      flex-wrap: wrap;
-    }
-    .site-footer__links a {
-      font-family: var(--w-font-body);
-      font-size: 0.8rem;
-      color: var(--w-muted-fg);
-      text-decoration: none;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
+    .collection__header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 2.5rem; }
+    .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; }
+    .product-card { position: relative; display: flex; flex-direction: column; border-radius: var(--radius); border: 1px solid var(--w-border); background: var(--w-card); overflow: hidden; text-decoration: none; transition: border-color 0.25s, box-shadow 0.25s; }
+    .product-card:hover { border-color: color-mix(in oklab, var(--w-primary) 40%, transparent); box-shadow: 0 0 30px -10px color-mix(in oklab, var(--w-rust) 25%, transparent); }
+    .product-card__img-wrap { position: relative; aspect-ratio: 4/5; overflow: hidden; background: var(--w-abyss); }
+    .product-card__img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; display: block; }
+    .product-card:hover .product-card__img-wrap img { transform: scale(1.05); }
+    .product-card__overlay { position: absolute; inset: 0; background: linear-gradient(to top, color-mix(in oklab, var(--w-background) 90%, transparent) 0%, transparent 50%); opacity: 0; transition: opacity 0.3s; display: flex; align-items: flex-end; padding: 1rem; }
+    .product-card:hover .product-card__overlay { opacity: 1; }
+    .product-card__add { width: 100%; background: var(--w-primary); color: var(--w-primary-fg); border: none; border-radius: calc(var(--radius) - 2px); padding: 0.65rem 1rem; font-family: var(--w-font-body); font-size: 0.825rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.4rem; text-decoration: none; }
+    .product-card__body { padding: 1rem 1.1rem 1.25rem; display: flex; flex-direction: column; gap: 0.2rem; }
+    .product-card__name { font-family: var(--w-font-heading); font-size: 1.15rem; color: var(--w-foreground); letter-spacing: 0.03em; transition: color 0.15s; }
+    .product-card:hover .product-card__name { color: var(--w-primary); }
+    .product-card__desc { font-family: var(--w-font-body); font-size: 0.825rem; color: var(--w-muted-fg); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; margin-top: 0.2rem; }
+    .product-card__price { font-family: var(--w-font-body); font-size: 0.9rem; color: var(--w-bio); margin-top: 0.5rem; font-weight: 500; }
+
+    .about { border-top: 1px solid var(--w-border); background: color-mix(in oklab, var(--w-abyss) 50%, transparent); }
+    .about__grid { display: grid; gap: 3rem; }
+    .about__heading { font-family: var(--w-font-heading); font-size: clamp(2.2rem, 4vw, 3.2rem); color: var(--w-bone); letter-spacing: 0.02em; margin-bottom: 1.5rem; }
+    .about__body { font-family: var(--w-font-body); font-size: 1.05rem; line-height: 1.75; color: var(--w-muted-fg); }
+    .sustainability { background: var(--w-card); border: 1px solid var(--w-border); border-radius: calc(var(--radius) * 1.5); padding: 2rem; }
+    .sustainability__heading { font-family: var(--w-font-heading); font-size: 1.8rem; color: var(--w-bone); letter-spacing: 0.02em; margin-bottom: 1.5rem; }
+    .sustainability__list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+    .sustainability__list li { display: flex; align-items: flex-start; gap: 0.75rem; font-family: var(--w-font-body); font-size: 0.95rem; color: var(--w-muted-fg); line-height: 1.55; }
+    .bio-dot { flex-shrink: 0; margin-top: 0.5rem; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--w-bio); }
+
+    .specimens { border-top: 1px solid var(--w-border); background: color-mix(in oklab, var(--w-abyss) 50%, transparent); }
+    .specimens__header { text-align: center; margin-bottom: 3rem; }
+    .specimens__track-wrap { overflow: hidden; }
+    .specimens__track { display: flex; gap: 1.5rem; transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+    .specimen-card { flex: 0 0 calc(33.333% - 1rem); border-radius: calc(var(--radius) * 1.5); border: 1px solid var(--w-border); background: var(--w-card); overflow: hidden; }
+    .specimen-card__img-wrap { position: relative; aspect-ratio: 3/4; overflow: hidden; }
+    .specimen-card__img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; display: block; }
+    .specimen-card:hover .specimen-card__img-wrap img { transform: scale(1.05); }
+    .specimen-card__overlay { position: absolute; inset: 0; background: linear-gradient(to top, color-mix(in oklab, var(--w-ink) 80%, transparent), transparent 50%); }
+    .specimen-card__caption { padding: 1.25rem; }
+    .specimen-card__title { font-family: var(--w-font-heading); font-size: 1.4rem; color: var(--w-foreground); letter-spacing: 0.02em; }
+    .specimen-card__sub { font-family: var(--w-font-body); font-size: 0.825rem; color: var(--w-muted-fg); margin-top: 0.3rem; }
+    .specimens__controls { display: flex; justify-content: center; gap: 0.75rem; margin-top: 2rem; }
+    .carousel-btn { background: var(--w-card); border: 1px solid var(--w-border); border-radius: 50%; width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--w-muted-fg); transition: border-color 0.15s, color 0.15s; }
+    .carousel-btn:hover { border-color: var(--w-bio); color: var(--w-bio); }
+
+    .site-footer { background: var(--w-ink); border-top: 1px solid var(--w-border); padding: clamp(2rem, 4vw, 3rem) clamp(1.25rem, 5vw, 4rem); text-align: center; }
+    .site-footer__brand { font-family: var(--w-font-heading); font-size: 1.8rem; color: var(--w-bone); letter-spacing: 0.06em; margin-bottom: 0.5rem; }
+    .site-footer__tagline { font-family: var(--w-font-body); font-size: 0.8rem; color: var(--w-muted-fg); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.5rem; }
+    .site-footer__links { display: flex; gap: 2rem; justify-content: center; list-style: none; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .site-footer__links a { font-family: var(--w-font-body); font-size: 0.8rem; color: var(--w-muted-fg); text-decoration: none; text-transform: uppercase; letter-spacing: 0.08em; transition: color 0.15s; }
     .site-footer__links a:hover { color: var(--w-bio); }
-    .site-footer__copy {
-      margin-top: 1.5rem;
-      font-family: var(--w-font-body);
-      font-size: 0.75rem;
-      color: var(--w-muted-fg);
-      opacity: 0.6;
-    }
+    .site-footer__copy { font-family: var(--w-font-body); font-size: 0.75rem; color: var(--w-muted-fg); opacity: 0.5; }
 
-    @media (max-width: 640px) {
-      .site-nav__links { display: none; }
-      .webbie-hero__inner { grid-template-columns: 1fr; }
-      .webbie-hero__specimen { display: none; }
-    }
+    @media (min-width: 64rem) { .about__grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 48rem) { .site-nav__links { display: none; } .specimen-card { flex-basis: calc(80% - 0.75rem); } }
+    @media (max-width: 36rem) { .product-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -195,96 +106,191 @@
   <nav class="site-nav" aria-label="Main navigation">
     <a class="site-nav__brand" href="#">Webbie</a>
     <ul class="site-nav__links">
-      <li><a href="#">Shop</a></li>
-      <li><a href="#">Collections</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Cart</a></li>
-      <li><a href="#">Contact</a></li>
+      <li><a href="#collection">Shop</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#field-specimens">Field Specimens</a></li>
+      <li><a href="#sustainability">Contact</a></li>
     </ul>
   </nav>
 
-  <!-- Hero -->
-  <section class="webbie-hero" aria-label="From the abyss, with love.">
-    <div class="webbie-hero__inner">
-      <div class="webbie-hero__copy">
-        <p class="webbie-hero__eyebrow">Field-illustrated. Small-batch. Zero fluff.</p>
-        <h1 class="webbie-hero__heading">From the abyss, <span class="accent">with love.</span></h1>
-        <p class="webbie-hero__subheading">
-          Scientifically accurate marine illustrations, hand-printed with algae ink on organic tees.
-          Forged in small batches. Not for the faint of heart.
-        </p>
-        <a href="#" class="webbie-hero__cta"><span>Shop the Collection</span></a>
+  <section class="hero" aria-label="If looks could krill">
+    <div class="hero__bg">
+      <img src="assets/hero-kraken.jpg" alt="Hand-illustrated giant kraken entwined with an anchor in the abyssal deep" width="1920" height="1088" loading="eager" />
+    </div>
+    <div class="hero__inner">
+      <p class="hero__eyebrow">Scientific in design. Savage by nature.</p>
+      <h1 class="hero__heading">If looks could<br><span class="accent">krill&hellip;</span></h1>
+      <p class="hero__sub">A marine biologist just took over the merch booth.<br>You're welcome.</p>
+      <div class="hero__actions">
+        <a href="#collection" class="btn-primary">Shop the Collection</a>
+        <a href="#about" class="btn-secondary">Our Manifesto</a>
       </div>
-      <div class="webbie-hero__specimen">
-        <div class="webbie-hero__card">
-          <div class="webbie-hero__image webbie-hero__image--placeholder" style="background: var(--w-kelp); border-radius: var(--radius); width: 100%; aspect-ratio: 3/4; display:flex; align-items:center; justify-content:center;">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" width="64" height="64" style="opacity:0.3; color: var(--w-bio)">
-              <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>
-            </svg>
+    </div>
+  </section>
+
+  <section id="collection" aria-labelledby="collection-heading">
+    <div class="section-inner">
+      <div class="collection__header">
+        <div>
+          <h2 id="collection-heading" class="section-heading">The Collection</h2>
+          <p class="section-sub">Curated drops from the deep.</p>
+        </div>
+      </div>
+      <div class="product-grid">
+
+        <article class="product-card">
+          <div class="product-card__img-wrap">
+            <img src="assets/specimen-1.jpg" alt="Giant Squid Tee" loading="lazy" />
+            <div class="product-card__overlay">
+              <a href="#" class="product-card__add">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                Add to Cart
+              </a>
+            </div>
           </div>
-          <div class="webbie-hero__tag" aria-hidden="true">
-            <span class="webbie-hero__tag-label">Specimen No.</span>
-            <span class="webbie-hero__tag-number">001</span>
-            <span class="webbie-hero__tag-species">Euphausia superba</span>
+          <div class="product-card__body">
+            <h3 class="product-card__name">Giant Squid Tee</h3>
+            <p class="product-card__desc">Coastal dusk survey — Unisex fit</p>
+            <p class="product-card__price">$48</p>
           </div>
+        </article>
+
+        <article class="product-card">
+          <div class="product-card__img-wrap">
+            <img src="assets/specimen-2.jpg" alt="Anglerfish Tee" loading="lazy" />
+            <div class="product-card__overlay">
+              <a href="#" class="product-card__add">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                Add to Cart
+              </a>
+            </div>
+          </div>
+          <div class="product-card__body">
+            <h3 class="product-card__name">Anglerfish Tee</h3>
+            <p class="product-card__desc">Wet lab, night shift — Femme fit</p>
+            <p class="product-card__price">$48</p>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <div class="product-card__img-wrap">
+            <img src="assets/specimen-3.jpg" alt="Whale Skeleton Tee" loading="lazy" />
+            <div class="product-card__overlay">
+              <a href="#" class="product-card__add">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                Add to Cart
+              </a>
+            </div>
+          </div>
+          <div class="product-card__body">
+            <h3 class="product-card__name">Whale Skeleton Tee</h3>
+            <p class="product-card__desc">Front row, second set — Unisex fit</p>
+            <p class="product-card__price">$48</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="about" aria-labelledby="about-heading">
+    <div class="section-inner">
+      <div class="about__grid">
+        <div>
+          <h2 id="about-heading" class="about__heading">Science with Teeth</h2>
+          <p class="about__body">
+            Every illustration starts with scientific research &mdash; morphological structure, ecological significance, and biogeography &mdash; then gets dialed up to eleven.<br><br>
+            No polar bears giving piggyback rides to penguins here. Just hand-inked oceanographic fauna that could hang in a lab, a venue, or both.
+          </p>
+        </div>
+        <div id="sustainability" class="sustainability">
+          <h3 class="sustainability__heading">Sustainably Produced</h3>
+          <ul class="sustainability__list">
+            <li><span class="bio-dot" aria-hidden="true"></span><span>Blanks chosen for organic content, ethical labour certification, and durability.</span></li>
+            <li><span class="bio-dot" aria-hidden="true"></span><span>Produced in small batches locally in San Diego, CA.</span></li>
+            <li><span class="bio-dot" aria-hidden="true"></span><span>Exclusive use of Algae-Ink's carbon-negative pigments.</span></li>
+            <li><span class="bio-dot" aria-hidden="true"></span><span>Packaging is compostable. No single-use plastic in the supply chain.</span></li>
+          </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Gallery marquee -->
-  <section class="webbie-gallery" aria-label="Featured specimens">
-    <div class="webbie-gallery__header">
-      <p class="webbie-gallery__eyebrow">The Collection</p>
-      <h2 class="webbie-gallery__heading">Specimens from the deep</h2>
-    </div>
-    <div class="webbie-gallery__viewport" data-pause-hover="true">
-      <div class="webbie-gallery__track" id="gallery-track" style="--speed: 28s;">
-        <!-- populated by square-catalog.js -->
+  <section id="field-specimens" class="specimens" aria-labelledby="specimens-heading">
+    <div class="section-inner">
+      <div class="specimens__header">
+        <p class="section-eyebrow">Observed in the wild</p>
+        <h2 id="specimens-heading" class="section-heading">Field Specimens</h2>
+      </div>
+      <div class="specimens__track-wrap">
+        <div class="specimens__track" id="specimens-track">
+          <figure class="specimen-card">
+            <div class="specimen-card__img-wrap">
+              <img src="assets/specimen-1.jpg" alt="Giant Squid Tee worn in the field" loading="lazy" width="900" height="1200" />
+              <div class="specimen-card__overlay" aria-hidden="true"></div>
+            </div>
+            <figcaption class="specimen-card__caption">
+              <h3 class="specimen-card__title">Giant Squid Tee</h3>
+              <p class="specimen-card__sub">Coastal dusk survey &mdash; Unisex fit</p>
+            </figcaption>
+          </figure>
+          <figure class="specimen-card">
+            <div class="specimen-card__img-wrap">
+              <img src="assets/specimen-2.jpg" alt="Anglerfish Tee worn in the field" loading="lazy" width="900" height="1200" />
+              <div class="specimen-card__overlay" aria-hidden="true"></div>
+            </div>
+            <figcaption class="specimen-card__caption">
+              <h3 class="specimen-card__title">Anglerfish Tee</h3>
+              <p class="specimen-card__sub">Wet lab, night shift &mdash; Femme fit</p>
+            </figcaption>
+          </figure>
+          <figure class="specimen-card">
+            <div class="specimen-card__img-wrap">
+              <img src="assets/specimen-3.jpg" alt="Whale Skeleton Tee worn in the field" loading="lazy" width="900" height="1200" />
+              <div class="specimen-card__overlay" aria-hidden="true"></div>
+            </div>
+            <figcaption class="specimen-card__caption">
+              <h3 class="specimen-card__title">Whale Skeleton Tee</h3>
+              <p class="specimen-card__sub">Front row, second set &mdash; Unisex fit</p>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="specimens__controls" aria-label="Carousel controls">
+        <button class="carousel-btn" id="carousel-prev" aria-label="Previous"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+        <button class="carousel-btn" id="carousel-next" aria-label="Next"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
       </div>
     </div>
   </section>
-
-  <!-- Features strip -->
-  <section class="features" aria-label="Why Webbie">
-    <div class="features__grid">
-      <div class="feature">
-        <span class="feature__icon">🔬</span>
-        <h3 class="feature__title">Scientifically Accurate</h3>
-        <p class="feature__body">Every illustration is vetted against primary literature. Your tee is peer-reviewed.</p>
-      </div>
-      <div class="feature">
-        <span class="feature__icon">🌿</span>
-        <h3 class="feature__title">Algae Ink Printing</h3>
-        <p class="feature__body">Water-based, algae-derived inks on 100% organic cotton. Soft on your skin, soft on the ocean.</p>
-      </div>
-      <div class="feature">
-        <span class="feature__icon">📦</span>
-        <h3 class="feature__title">Small Batch Only</h3>
-        <p class="feature__body">Each run is limited. No overstock. No landfill. Own something genuinely rare.</p>
-      </div>
-      <div class="feature">
-        <span class="feature__icon">🌊</span>
-        <h3 class="feature__title">1% for the Ocean</h3>
-        <p class="feature__body">Every purchase supports marine conservation research. Science needs funding.</p>
-      </div>
-    </div>
-  </section>
-
-  <script src="assets/square-catalog.js"></script>
 
   <footer class="site-footer">
     <p class="site-footer__brand">Webbie</p>
     <p class="site-footer__tagline">From the abyss, with love.</p>
     <ul class="site-footer__links">
-      <li><a href="#">Shop</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Shipping</a></li>
-      <li><a href="#">Returns</a></li>
+      <li><a href="#collection">Shop</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#sustainability">Sustainability</a></li>
       <li><a href="https://github.com/oceaneboulais/webbie-theme" target="_blank" rel="noopener">GitHub</a></li>
     </ul>
     <p class="site-footer__copy">&copy; 2026 Webbie. MIT licensed theme.</p>
   </footer>
+
+  <script>
+    (function () {
+      const track = document.getElementById('specimens-track');
+      const cards = track.querySelectorAll('.specimen-card');
+      let index = 0, paused = false;
+      function goTo(i) {
+        index = ((i % cards.length) + cards.length) % cards.length;
+        track.style.transform = 'translateX(-' + (index * (cards[0].offsetWidth + 24)) + 'px)';
+      }
+      document.getElementById('carousel-next').addEventListener('click', function () { paused = true; goTo(index + 1); });
+      document.getElementById('carousel-prev').addEventListener('click', function () { paused = true; goTo(index - 1); });
+      track.addEventListener('mouseenter', function () { paused = true; });
+      track.addEventListener('mouseleave', function () { paused = false; });
+      setInterval(function () { if (!paused) goTo(index + 1); }, 3500);
+    })();
+  </script>
 
 </body>
 </html>
