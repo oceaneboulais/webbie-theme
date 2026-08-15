@@ -379,12 +379,12 @@
       })();
 
       // DOM pool — one element per cell
-      var SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 10" width="18" height="9"><ellipse cx="10" cy="5" rx="6.5" ry="2.2" fill="oklch(0.75 0.18 175/0.9)"/><line x1="3.5" y1="5" x2="0.5" y2="3" stroke="oklch(0.8 0.18 175/0.8)" stroke-width="0.9"/><line x1="3.5" y1="5" x2="0.5" y2="7" stroke="oklch(0.8 0.18 175/0.8)" stroke-width="0.9"/><line x1="16.5" y1="5" x2="19.5" y2="3" stroke="oklch(0.8 0.18 175/0.8)" stroke-width="0.9"/><line x1="16.5" y1="5" x2="19.5" y2="7" stroke="oklch(0.8 0.18 175/0.8)" stroke-width="0.9"/><circle cx="3.5" cy="4.5" r="0.9" fill="oklch(0.95 0.2 185)"/></svg>';
+      var SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 10" width="18" height="9"><ellipse cx="10" cy="5" rx="6.5" ry="2.2" fill="rgba(0,199,177,0.9)"/><line x1="3.5" y1="5" x2="0.5" y2="3" stroke="rgba(0,213,190,0.8)" stroke-width="0.9"/><line x1="3.5" y1="5" x2="0.5" y2="7" stroke="rgba(0,213,190,0.8)" stroke-width="0.9"/><line x1="16.5" y1="5" x2="19.5" y2="3" stroke="rgba(0,213,190,0.8)" stroke-width="0.9"/><line x1="16.5" y1="5" x2="19.5" y2="7" stroke="rgba(0,213,190,0.8)" stroke-width="0.9"/><circle cx="3.5" cy="4.5" r="0.9" fill="rgba(120,255,235,1)"/></svg>';
       var pool = [];
       for (var i = 0; i < COLS * ROWS; i++) {
         var el = document.createElement('div');
         el.innerHTML = SVG;
-        el.style.cssText = 'position:fixed;pointer-events:none;z-index:9999;opacity:0;transition:opacity 0.45s ease;will-change:transform;filter:drop-shadow(0 0 5px oklch(0.75 0.18 175/0.85));';
+        el.style.cssText = 'position:fixed;pointer-events:none;z-index:9999;opacity:0;transition:opacity 0.45s ease;will-change:transform;filter:drop-shadow(0 0 5px rgba(0,199,177,0.85));';
         document.body.appendChild(el);
         pool.push(el);
       }
