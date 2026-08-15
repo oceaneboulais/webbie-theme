@@ -1,0 +1,11 @@
+name = "webbie-catalog"
+main = "index.js"
+compatibility_date = "2024-01-18"
+
+[vars]
+# Your GitHub Pages URL — only this origin can call the Worker
+ALLOWED_ORIGIN = "https://oceaneboulais.github.io"
+
+# SQUARE_TOKEN is a secret — set it with:
+#   wrangler secret put SQUARE_TOKEN
+# Never put your token in this file.

@@ -3,28 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Webbie — scientifically accurate marine illustrations, hand-printed on organic tees. A Shopify theme preview." />
+  <meta name="description" content="Webbie — scientifically accurate marine illustrations, hand-printed with algae ink on organic tees. Small-batch. Science-backed." />
   <title>Webbie Theme — Preview</title>
   <link rel="stylesheet" href="assets/webbie-base.css" />
   <link rel="stylesheet" href="assets/webbie-hero.css" />
   <link rel="stylesheet" href="assets/webbie-gallery.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    .preview-banner {
-      background: var(--w-rust);
-      color: var(--w-primary-fg);
-      text-align: center;
-      padding: 0.6rem 1rem;
-      font-family: var(--w-font-body);
-      font-size: 0.8rem;
-      letter-spacing: 0.08em;
-    }
-    .preview-banner a {
-      color: inherit;
-      font-weight: 700;
-      text-underline-offset: 3px;
-    }
 
     /* ---- Nav ---- */
     .site-nav {
@@ -59,37 +44,61 @@
     }
     .site-nav__links a:hover { color: var(--w-bio); }
 
-    /* ---- Gallery placeholder cards ---- */
-    .gallery-placeholder {
+    /* ---- Product cards (static fallback + live) ---- */
+    .product-card {
       background: var(--w-card);
       border-radius: var(--radius);
       width: 220px;
-      height: 280px;
+      height: 300px;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: flex-end;
-      padding: 1.25rem;
+      overflow: hidden;
       border: 1px solid var(--w-border);
-      gap: 0.4rem;
+      text-decoration: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      flex-shrink: 0;
     }
-    .gallery-placeholder svg {
-      width: 80px;
-      height: 80px;
-      opacity: 0.25;
-      margin-bottom: auto;
-      margin-top: auto;
+    .product-card:hover {
+      border-color: var(--w-bio);
+      box-shadow: 0 0 18px color-mix(in oklab, var(--w-bio) 20%, transparent);
     }
-    .gallery-placeholder__name {
+    .product-card__img {
+      width: 100%;
+      flex: 1;
+      object-fit: cover;
+      background: var(--w-kelp);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .product-card__img svg { opacity: 0.2; }
+    .product-card__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .product-card__info {
+      padding: 0.85rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .product-card__name {
       font-family: var(--w-font-heading);
       font-size: 1rem;
       color: var(--w-bone);
       letter-spacing: 0.04em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-    .gallery-placeholder__price {
+    .product-card__price {
       font-family: var(--w-font-body);
       font-size: 0.85rem;
       color: var(--w-bio);
+    }
+    .product-card__sold-out {
+      font-family: var(--w-font-body);
+      font-size: 0.7rem;
+      color: var(--w-rust);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
 
     /* ---- Features strip ---- */
@@ -183,11 +192,6 @@
 </head>
 <body>
 
-  <p class="preview-banner">
-    ⚓ Static theme preview — live store runs on <a href="https://shopify.com" target="_blank" rel="noopener">Shopify</a>
-    &nbsp;·&nbsp; Source on <a href="https://github.com/oceaneboulais/webbie-theme" target="_blank" rel="noopener">GitHub</a>
-  </p>
-
   <nav class="site-nav" aria-label="Main navigation">
     <a class="site-nav__brand" href="#">Webbie</a>
     <ul class="site-nav__links">
@@ -195,6 +199,7 @@
       <li><a href="#">Collections</a></li>
       <li><a href="#">About</a></li>
       <li><a href="#">Cart</a></li>
+      <li><a href="#">Contact</a></li>
     </ul>
   </nav>
 
@@ -234,59 +239,8 @@
       <h2 class="webbie-gallery__heading">Specimens from the deep</h2>
     </div>
     <div class="webbie-gallery__viewport" data-pause-hover="true">
-      <div class="webbie-gallery__track" style="--speed: 28s;">
-        <!-- Set 1 -->
-        <div class="gallery-placeholder webbie-gallery__item">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span class="gallery-placeholder__name">Krill Tee</span>
-          <span class="gallery-placeholder__price">$48</span>
-        </div>
-        <div class="gallery-placeholder webbie-gallery__item">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span class="gallery-placeholder__name">Anglerfish Tee</span>
-          <span class="gallery-placeholder__price">$48</span>
-        </div>
-        <div class="gallery-placeholder webbie-gallery__item">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span class="gallery-placeholder__name">Octopus Print</span>
-          <span class="gallery-placeholder__price">$36</span>
-        </div>
-        <div class="gallery-placeholder webbie-gallery__item">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span class="gallery-placeholder__name">Nautilus Tee</span>
-          <span class="gallery-placeholder__price">$48</span>
-        </div>
-        <div class="gallery-placeholder webbie-gallery__item">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span class="gallery-placeholder__name">Cuttlefish Tote</span>
-          <span class="gallery-placeholder__price">$28</span>
-        </div>
-        <!-- Set 2 (duplicate for seamless loop) -->
-        <div class="gallery-placeholder webbie-gallery__item" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span class="gallery-placeholder__name">Krill Tee</span>
-          <span class="gallery-placeholder__price">$48</span>
-        </div>
-        <div class="gallery-placeholder webbie-gallery__item" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span class="gallery-placeholder__name">Anglerfish Tee</span>
-          <span class="gallery-placeholder__price">$48</span>
-        </div>
-        <div class="gallery-placeholder webbie-gallery__item" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span class="gallery-placeholder__name">Octopus Print</span>
-          <span class="gallery-placeholder__price">$36</span>
-        </div>
-        <div class="gallery-placeholder webbie-gallery__item" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span class="gallery-placeholder__name">Nautilus Tee</span>
-          <span class="gallery-placeholder__price">$48</span>
-        </div>
-        <div class="gallery-placeholder webbie-gallery__item" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span class="gallery-placeholder__name">Cuttlefish Tote</span>
-          <span class="gallery-placeholder__price">$28</span>
-        </div>
+      <div class="webbie-gallery__track" id="gallery-track" style="--speed: 28s;">
+        <!-- populated by square-catalog.js -->
       </div>
     </div>
   </section>
@@ -316,6 +270,8 @@
       </div>
     </div>
   </section>
+
+  <script src="assets/square-catalog.js"></script>
 
   <footer class="site-footer">
     <p class="site-footer__brand">Webbie</p>
