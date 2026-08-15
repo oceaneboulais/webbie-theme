@@ -1,0 +1,71 @@
+/*
+ * WEBBIE — single global stylesheet: fonts + design tokens.
+ * Loaded on every section. Font URL is hardcoded to this store's
+ * live CDN path (found via page source) instead of using Liquid's
+ * asset_url filter, to avoid .css.liquid MIME-type issues.
+ */
+
+@font-face {
+  font-family: "Iceland Winterstorm";
+  src: url("https://bywebbie.com/cdn/shop/t/7/assets/IcelandWinterstorm-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --radius: 0.5rem;
+
+  --w-background:   oklch(0.16 0.02 245);
+  --w-foreground:   oklch(0.94 0.01 85);
+  --w-card:         oklch(0.2 0.025 245);
+  --w-card-fg:      oklch(0.94 0.01 85);
+  --w-popover:      oklch(0.18 0.02 245);
+
+  --w-primary:      oklch(0.55 0.14 45);
+  --w-primary-fg:   oklch(0.98 0.005 85);
+  --w-secondary:    oklch(0.25 0.04 200);
+  --w-secondary-fg: oklch(0.94 0.01 85);
+  --w-muted:        oklch(0.28 0.025 230);
+  --w-muted-fg:     oklch(0.7 0.03 230);
+  --w-accent:       oklch(0.7 0.12 185);
+  --w-accent-fg:    oklch(0.12 0.02 245);
+  --w-border:       oklch(1 0 0 / 8%);
+  --w-input:        oklch(1 0 0 / 12%);
+  --w-ring:         oklch(0.7 0.12 185);
+
+  --w-abyss:        oklch(0.12 0.025 245);
+  --w-abyss-fg:     oklch(0.94 0.01 85);
+  --w-ink:          oklch(0.08 0.015 245);
+  --w-bone:         oklch(0.94 0.01 85);
+  --w-rust:         oklch(0.55 0.14 45);
+  --w-kelp:         oklch(0.32 0.05 180);
+  --w-bio:          oklch(0.7 0.12 185);
+  --w-bio-glow:     oklch(0.75 0.16 175);
+  --w-parchment:    oklch(0.93 0.02 85);
+  --w-fossil:       oklch(0.6 0.04 80);
+
+  --w-font-heading: "Iceland Winterstorm", "Pirata One", "UnifrakturMaguntia", serif;
+  --w-font-body:    "Inter", system-ui, sans-serif;
+}
+
+body {
+  background-color: var(--w-background);
+  color: var(--w-foreground);
+  font-family: var(--w-font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--w-font-heading);
+  letter-spacing: 0.02em;
+}
+
+.w-text-bio-glow {
+  text-shadow: 0 0 20px color-mix(in oklab, var(--w-bio) 40%, transparent);
+}
+
+.w-bg-abyss-gradient {
+  background: radial-gradient(ellipse at top, var(--w-kelp) 0%, var(--w-background) 45%, var(--w-abyss) 100%);
+}

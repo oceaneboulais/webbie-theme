@@ -1,0 +1,107 @@
+{{ 'webbie-base.css' | asset_url | stylesheet_tag }}
+{{ 'webbie-hero.css' | asset_url | stylesheet_tag }}
+
+<section class="webbie-hero" aria-label="{{ section.settings.heading | escape }}">
+  <div class="webbie-hero__inner">
+
+    <div class="webbie-hero__copy">
+      <p class="webbie-hero__eyebrow">{{ section.settings.eyebrow | default: "Field-illustrated. Small-batch. Zero fluff." }}</p>
+
+      <h1 class="webbie-hero__heading">{{ section.settings.heading | default: "From the abyss, <span class='accent'>with love.</span>" }}</h1>
+
+      <p class="webbie-hero__subheading">
+        {{ section.settings.subheading | default: "Scientifically accurate marine illustrations, hand-printed with algae ink on organic tees. Forged in small batches. Not for the faint of heart." }}
+      </p>
+
+      {%- if section.settings.button_label != blank -%}
+        <a href="{{ section.settings.button_link | default: '#' }}" class="webbie-hero__cta">
+          <span>{{ section.settings.button_label }}</span>
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="webbie-hero__specimen">
+      <div class="webbie-hero__card">
+        {%- if section.settings.image != blank -%}
+          <img
+            src="{{ section.settings.image | image_url: width: 900 }}"
+            srcset="{{ section.settings.image | image_url: width: 600 }} 600w, {{ section.settings.image | image_url: width: 900 }} 900w, {{ section.settings.image | image_url: width: 1200 }} 1200w"
+            sizes="(max-width: 749px) 90vw, 42vw"
+            alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+            width="{{ section.settings.image.width }}"
+            height="{{ section.settings.image.height }}"
+            loading="eager"
+            class="webbie-hero__image"
+          >
+        {%- else -%}
+          <div class="webbie-hero__image webbie-hero__image--placeholder">{{ 'image' | placeholder_svg_tag }}</div>
+        {%- endif -%}
+
+        <div class="webbie-hero__tag" aria-hidden="true">
+          <span class="webbie-hero__tag-label">Specimen No.</span>
+          <span class="webbie-hero__tag-number">{{ section.settings.specimen_number | default: "001" }}</span>
+          <span class="webbie-hero__tag-species">{{ section.settings.specimen_name | default: "Euphausia superba" }}</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Webbie Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Field-illustrated. Small-batch. Zero fluff."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Wear the wildlife. Skip the waste."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Shop the drop"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero image"
+    },
+    {
+      "type": "text",
+      "id": "specimen_number",
+      "label": "Specimen tag number",
+      "default": "001"
+    },
+    {
+      "type": "text",
+      "id": "specimen_name",
+      "label": "Specimen tag species name",
+      "default": "Euphausia superba"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Webbie Hero"
+    }
+  ]
+}
+{% endschema %}

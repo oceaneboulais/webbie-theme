@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "hero": {
+      "type": "webbie-hero",
+      "settings": {}
+    },
+    "gallery": {
+      "type": "webbie-gallery",
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "gallery"
+  ]
+}

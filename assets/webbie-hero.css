@@ -1,0 +1,195 @@
+.webbie-hero {
+  background: radial-gradient(ellipse at top, var(--w-kelp) 0%, var(--w-background) 45%, var(--w-abyss) 100%);
+  color: var(--w-foreground);
+  padding: clamp(2.5rem, 6vw, 6rem) clamp(1.25rem, 5vw, 4rem);
+}
+
+.webbie-hero__inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(2.5rem, 6vw, 5rem);
+  align-items: center;
+}
+
+.webbie-hero__copy {
+  max-width: 34rem;
+}
+
+.webbie-hero__eyebrow {
+  font-family: var(--w-font-body);
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--w-bio);
+  margin: 0 0 1.1rem;
+  border-left: 2px solid var(--w-rust);
+  padding-left: 0.65rem;
+}
+
+.webbie-hero__heading {
+  font-family: var(--w-font-heading);
+  font-weight: 400;
+  font-size: clamp(2.6rem, 5.2vw, 4.4rem);
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  margin: 0 0 1.25rem;
+  color: var(--w-bone);
+  text-shadow: 0 0 24px color-mix(in oklab, var(--w-bio) 35%, transparent);
+}
+
+.webbie-hero__heading .accent {
+  color: var(--w-rust);
+  text-shadow: none;
+}
+
+.webbie-hero__subheading {
+  font-family: var(--w-font-body);
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  line-height: 1.6;
+  color: var(--w-muted-fg);
+  margin: 0 0 2.1rem;
+  max-width: 30rem;
+}
+
+.webbie-hero__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--w-font-body);
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--w-primary-fg);
+  background: var(--w-primary);
+  padding: 0.95rem 1.85rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--w-rust);
+  transition: box-shadow 0.2s ease, transform 0.18s ease, background-color 0.2s ease;
+}
+
+.webbie-hero__cta:hover {
+  box-shadow: 0 0 0 1px var(--w-bio), 0 0 22px color-mix(in oklab, var(--w-bio) 35%, transparent);
+}
+
+.webbie-hero__cta:focus-visible {
+  outline: 2px solid var(--w-bio);
+  outline-offset: 3px;
+}
+
+.webbie-hero__cta:active {
+  transform: translateY(1px);
+}
+
+.webbie-hero__specimen {
+  display: flex;
+  justify-content: center;
+}
+
+.webbie-hero__card {
+  position: relative;
+  width: 100%;
+  max-width: 30rem;
+  background: var(--w-card);
+  padding: clamp(0.75rem, 2vw, 1.25rem);
+  border: 1px solid var(--w-border);
+  border-radius: var(--radius);
+  box-shadow: 0 0 40px color-mix(in oklab, var(--w-bio) 12%, transparent),
+              0 1px 0 rgba(0, 0, 0, 0.3);
+}
+
+.webbie-hero__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--w-muted);
+}
+
+.webbie-hero__image--placeholder svg {
+  width: 100%;
+  height: 100%;
+}
+
+.webbie-hero__tag {
+  position: absolute;
+  top: clamp(-1.1rem, -2vw, -0.75rem);
+  right: clamp(-0.75rem, -2vw, -1.25rem);
+  transform: rotate(4deg);
+  background: var(--w-ink);
+  border: 1px solid var(--w-bio);
+  padding: 0.6rem 0.85rem 0.65rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 9rem;
+  box-shadow: 0 0 18px color-mix(in oklab, var(--w-bio) 30%, transparent);
+}
+
+.webbie-hero__tag::before {
+  content: "";
+  position: absolute;
+  top: 0.4rem;
+  left: 0.4rem;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  border: 1px solid var(--w-bio);
+  background: var(--w-ink);
+}
+
+.webbie-hero__tag-label {
+  font-family: var(--w-font-body);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--w-fossil);
+  padding-left: 0.65rem;
+}
+
+.webbie-hero__tag-number {
+  font-family: var(--w-font-body);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--w-rust);
+  padding-left: 0.65rem;
+}
+
+.webbie-hero__tag-species {
+  font-family: var(--w-font-heading);
+  font-size: 1.05rem;
+  color: var(--w-bio);
+  padding-left: 0.65rem;
+  margin-top: 0.1rem;
+}
+
+@media (max-width: 749px) {
+  .webbie-hero__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .webbie-hero__copy {
+    max-width: none;
+    order: 2;
+  }
+
+  .webbie-hero__specimen {
+    order: 1;
+  }
+
+  .webbie-hero__card {
+    max-width: 22rem;
+    margin: 0 auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .webbie-hero__cta {
+    transition: none;
+  }
+}

@@ -1,0 +1,132 @@
+{{ 'webbie-base.css' | asset_url | stylesheet_tag }}
+{{ 'webbie-gallery.css' | asset_url | stylesheet_tag }}
+
+<section class="webbie-gallery" aria-label="{{ section.settings.heading | escape }}">
+  <div class="webbie-gallery__header">
+    <p class="webbie-gallery__eyebrow">{{ section.settings.eyebrow | default: "Field sightings" }}</p>
+    <h2 class="webbie-gallery__heading">{{ section.settings.heading | default: "Spotted in the wild" }}</h2>
+  </div>
+
+  {%- assign blocks_count = section.blocks.size -%}
+  {%- if blocks_count > 0 -%}
+    <div class="webbie-gallery__viewport" {% if section.settings.pause_on_hover %}data-pause-hover="true"{% endif %}>
+      <div class="webbie-gallery__track" style="--item-count: {{ blocks_count }}; --speed: {{ section.settings.speed | default: 32 }}s;">
+
+        {%- comment -%} first pass {%- endcomment -%}
+        {%- for block in section.blocks -%}
+          <figure class="webbie-gallery__item" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              <img
+                src="{{ block.settings.image | image_url: width: 500 }}"
+                srcset="{{ block.settings.image | image_url: width: 350 }} 350w, {{ block.settings.image | image_url: width: 500 }} 500w, {{ block.settings.image | image_url: width: 700 }} 700w"
+                sizes="220px"
+                alt="{{ block.settings.image.alt | default: block.settings.caption | escape }}"
+                loading="lazy"
+                class="webbie-gallery__image"
+              >
+            {%- else -%}
+              <div class="webbie-gallery__image webbie-gallery__image--placeholder">{{ 'image' | placeholder_svg_tag }}</div>
+            {%- endif -%}
+            {%- if block.settings.caption != blank -%}
+              <figcaption class="webbie-gallery__caption">{{ block.settings.caption }}</figcaption>
+            {%- endif -%}
+          </figure>
+        {%- endfor -%}
+
+        {%- comment -%} duplicate pass for seamless loop {%- endcomment -%}
+        {%- for block in section.blocks -%}
+          <figure class="webbie-gallery__item" aria-hidden="true">
+            {%- if block.settings.image != blank -%}
+              <img
+                src="{{ block.settings.image | image_url: width: 500 }}"
+                alt=""
+                loading="lazy"
+                class="webbie-gallery__image"
+              >
+            {%- endif -%}
+            {%- if block.settings.caption != blank -%}
+              <figcaption class="webbie-gallery__caption">{{ block.settings.caption }}</figcaption>
+            {%- endif -%}
+          </figure>
+        {%- endfor -%}
+
+      </div>
+    </div>
+  {%- else -%}
+    <p class="webbie-gallery__empty">Add customer photos in the theme editor to fill this section.</p>
+  {%- endif -%}
+
+  {%- if section.settings.hashtag != blank -%}
+    <p class="webbie-gallery__hashtag">Tag {{ section.settings.hashtag }} to be featured</p>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Webbie Customer Gallery",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Field sightings"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Spotted in the wild"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Scroll speed (seconds per loop)",
+      "min": 10,
+      "max": 60,
+      "step": 2,
+      "default": 32
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause on hover",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "hashtag",
+      "label": "Hashtag to display below",
+      "default": "#WebbieWorn"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "photo",
+      "name": "Customer photo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption (e.g. @handle)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Webbie Customer Gallery",
+      "blocks": [
+        { "type": "photo" },
+        { "type": "photo" },
+        { "type": "photo" },
+        { "type": "photo" }
+      ]
+    }
+  ]
+}
+{% endschema %}
