@@ -132,8 +132,8 @@
       .specimen-card { flex-basis: calc(82% - 0.75rem); }
     }
     @media (max-width: 36rem) { .product-grid { grid-template-columns: 1fr; } }
-    /* Krill: pointer-coarse = touch device, skip rendering entirely */
-    @media (pointer: coarse) { .krill-layer { display: none !important; } }
+    /* Hide krill on genuine touch-only devices */
+    @media (pointer: coarse) and (hover: none) { .krill-el { display: none !important; } }
   </style>
 </head>
 <body>
@@ -397,9 +397,8 @@
       setInterval(function () { if (!paused) goTo(index + 1); }, 3500);
     })();
 
-    // Bioluminescent krill — GoL simulation; skipped on touch devices
+    // Bioluminescent krill — GoL simulation; hidden on touch via CSS
     (function () {
-      if (window.matchMedia('(pointer: coarse)').matches) return;
       var COLS = 7, ROWS = 5, CELL = 26, GEN_MS = 950;
       var mouse = { x: -400, y: -400 };
       var cx = -400, cy = -400;
@@ -457,6 +456,7 @@
         var el = document.createElement('div');
         el.innerHTML = SVG;
         el.style.cssText = 'position:fixed;pointer-events:none;z-index:9999;opacity:0;transition:opacity 0.45s ease;will-change:transform;filter:drop-shadow(0 0 5px rgba(0,199,177,0.85));';
+        el.className = 'krill-el';
         document.body.appendChild(el);
         pool.push(el);
       }
