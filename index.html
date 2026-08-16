@@ -13,6 +13,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>𓆝Webbie — Heavy Metal Meets Marine Biology</title>
   <link rel="stylesheet" href="assets/webbie-base.css" />
+  <!-- Square Web Payments SDK — production -->
+  <script src="https://web.squarecdn.com/v1/square.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -134,6 +136,65 @@
     @media (max-width: 36rem) { .product-grid { grid-template-columns: 1fr; } }
     /* Hide krill on genuine touch-only devices */
     @media (pointer: coarse) and (hover: none) { .krill-el { display: none !important; } }
+
+    /* ── Cart nav button ── */
+    .cart-btn { background: none; border: 1px solid var(--w-border); border-radius: var(--radius); padding: 0.4rem 0.65rem; cursor: pointer; color: var(--w-muted-fg); display: flex; align-items: center; gap: 0.4rem; font-family: var(--w-font-body); font-size: 0.8rem; transition: border-color 0.15s, color 0.15s; flex-shrink: 0; }
+    .cart-btn:hover { border-color: var(--w-bio); color: var(--w-bio); }
+    .cart-btn:focus-visible { outline: 2px solid var(--w-bio); outline-offset: 3px; }
+    .cart-badge { background: var(--w-primary); color: var(--w-primary-fg); font-size: 0.6rem; font-weight: 700; min-width: 1.1rem; height: 1.1rem; border-radius: 9999px; display: inline-flex; align-items: center; justify-content: center; padding: 0 0.2rem; }
+    .cart-badge[hidden] { display: none; }
+
+    /* ── Size picker ── */
+    .size-picker { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.6rem; }
+    .size-btn { background: transparent; border: 1px solid var(--w-border); border-radius: calc(var(--radius) - 2px); padding: 0.18rem 0.45rem; font-family: var(--w-font-body); font-size: 0.72rem; font-weight: 500; color: var(--w-muted-fg); cursor: pointer; transition: border-color 0.15s, color 0.15s, background 0.15s; }
+    .size-btn:hover { border-color: var(--w-bio); color: var(--w-bio); }
+    .size-btn.selected { background: var(--w-primary); border-color: var(--w-primary); color: var(--w-primary-fg); }
+    .size-hint { font-family: var(--w-font-body); font-size: 0.7rem; color: var(--w-rust); margin-top: 0.25rem; min-height: 1em; }
+
+    /* ── Cart drawer ── */
+    .cart-drawer { display: none; }
+    .cart-drawer.open { display: block; position: fixed; inset: 0; z-index: 200; }
+    .cart-drawer__backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.6); }
+    .cart-drawer__panel { position: absolute; top: 0; right: 0; bottom: 0; width: min(22rem, 94vw); background: var(--w-abyss); border-left: 1px solid var(--w-border); display: flex; flex-direction: column; }
+    .cart-drawer__head { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--w-border); }
+    .cart-drawer__title { font-family: var(--w-font-heading); font-size: 1.5rem; color: var(--w-bone); letter-spacing: 0.02em; }
+    .cart-drawer__close { background: none; border: 1px solid var(--w-border); border-radius: 50%; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--w-muted-fg); }
+    .cart-items { flex: 1; overflow-y: auto; padding: 1rem 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+    .cart-empty { text-align: center; color: var(--w-muted-fg); font-family: var(--w-font-body); font-size: 0.9rem; padding: 2rem 0; }
+    .cart-item { display: flex; align-items: center; gap: 0.75rem; }
+    .cart-item__info { flex: 1; }
+    .cart-item__name { font-family: var(--w-font-heading); font-size: 1rem; color: var(--w-foreground); }
+    .cart-item__meta { font-family: var(--w-font-body); font-size: 0.8rem; color: var(--w-muted-fg); margin-top: 0.1rem; }
+    .cart-item__price { font-family: var(--w-font-body); font-size: 0.9rem; color: var(--w-bio); white-space: nowrap; }
+    .cart-item__remove { background: none; border: none; color: var(--w-muted-fg); cursor: pointer; font-size: 1.2rem; line-height: 1; padding: 0.1rem; }
+    .cart-item__remove:hover { color: var(--w-rust); }
+    .cart-drawer__foot { border-top: 1px solid var(--w-border); padding: 1.25rem 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+    .cart-subtotal { display: flex; justify-content: space-between; font-family: var(--w-font-body); font-size: 0.9rem; color: var(--w-muted-fg); }
+    .cart-subtotal strong { color: var(--w-foreground); font-size: 1rem; }
+
+    /* ── Checkout modal ── */
+    .checkout-modal { display: none; }
+    .checkout-modal.open { display: flex; position: fixed; inset: 0; z-index: 300; align-items: center; justify-content: center; }
+    .checkout-modal__backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.75); }
+    .checkout-modal__panel { position: relative; width: min(36rem, 96vw); max-height: 90vh; overflow-y: auto; background: var(--w-abyss); border: 1px solid var(--w-border); border-radius: calc(var(--radius) * 1.5); padding: 2rem; display: flex; flex-direction: column; gap: 1.25rem; }
+    .checkout-modal__head { display: flex; align-items: center; justify-content: space-between; }
+    .checkout-modal__title { font-family: var(--w-font-heading); font-size: 1.7rem; color: var(--w-bone); letter-spacing: 0.02em; }
+    .checkout-modal__close { background: none; border: 1px solid var(--w-border); border-radius: 50%; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--w-muted-fg); }
+    .form-label { font-family: var(--w-font-body); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--w-muted-fg); margin-bottom: 0.3rem; display: block; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    .form-row-3 { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 0.75rem; }
+    .checkout-form { display: flex; flex-direction: column; gap: 0.85rem; }
+    .checkout-form input { background: var(--w-card); border: 1px solid var(--w-border); border-radius: var(--radius); padding: 0.6rem 0.85rem; font-family: var(--w-font-body); font-size: 0.875rem; color: var(--w-foreground); width: 100%; }
+    .checkout-form input::placeholder { color: var(--w-muted-fg); opacity: 0.6; }
+    .checkout-form input:focus { outline: 2px solid var(--w-bio); outline-offset: 2px; border-color: transparent; }
+    .form-divider { border: none; border-top: 1px solid var(--w-border); margin: 0.25rem 0; }
+    #sq-card { min-height: 60px; }
+    .checkout-error { color: var(--w-rust); font-family: var(--w-font-body); font-size: 0.875rem; padding: 0.75rem; background: color-mix(in oklab, var(--w-rust) 8%, transparent); border: 1px solid color-mix(in oklab, var(--w-rust) 30%, transparent); border-radius: var(--radius); }
+    .checkout-confirm { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; padding: 1.5rem 0; }
+    .checkout-confirm__icon { font-size: 3rem; }
+    .checkout-confirm__title { font-family: var(--w-font-heading); font-size: 2rem; color: var(--w-bio); }
+    .checkout-confirm__body { font-family: var(--w-font-body); color: var(--w-muted-fg); font-size: 0.95rem; line-height: 1.6; }
+    .checkout-confirm__receipt { font-family: var(--w-font-body); font-size: 0.85rem; color: var(--w-primary); }
   </style>
 </head>
 <body>
@@ -149,6 +210,10 @@
     <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-drawer">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
+    <button class="cart-btn" id="cart-open" aria-label="Open cart">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <span class="cart-badge" id="cart-count" hidden>0</span>
+    </button>
   </nav>
 
   <div class="nav-drawer" id="nav-drawer" role="dialog" aria-modal="true" aria-label="Navigation menu">
@@ -161,6 +226,67 @@
       <a href="#about" class="nav-drawer__link">About</a>
       <a href="#field-specimens" class="nav-drawer__link">Field Specimens</a>
       <a href="#sustainability" class="nav-drawer__link">Contact</a>
+    </div>
+  </div>
+
+  <!-- Cart drawer -->
+  <div id="cart-drawer" class="cart-drawer" role="dialog" aria-modal="true" aria-label="Shopping cart">
+    <div class="cart-drawer__backdrop" id="cart-backdrop"></div>
+    <div class="cart-drawer__panel">
+      <div class="cart-drawer__head">
+        <h2 class="cart-drawer__title">Cart</h2>
+        <button class="cart-drawer__close" id="cart-close" aria-label="Close cart">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div id="cart-items" class="cart-items"></div>
+      <div class="cart-drawer__foot">
+        <div class="cart-subtotal"><span>Subtotal</span><strong id="cart-subtotal">$0.00</strong></div>
+        <button class="btn-primary" id="checkout-open" style="width:100%">Checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkout modal -->
+  <div id="checkout-modal" class="checkout-modal" role="dialog" aria-modal="true" aria-label="Checkout">
+    <div class="checkout-modal__backdrop" id="checkout-backdrop"></div>
+    <div class="checkout-modal__panel">
+      <div class="checkout-modal__head">
+        <h2 class="checkout-modal__title">Checkout</h2>
+        <button class="checkout-modal__close" id="checkout-modal-close" aria-label="Close checkout">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <form class="checkout-form" id="checkout-form" novalidate>
+        <label class="form-label">Contact</label>
+        <div class="form-row">
+          <input type="text" name="fullName" placeholder="Full name" autocomplete="name" required />
+          <input type="email" name="email" placeholder="Email" autocomplete="email" required />
+        </div>
+
+        <hr class="form-divider" />
+        <label class="form-label">Shipping address</label>
+        <input type="text" name="address1" placeholder="Street address" autocomplete="address-line1" required />
+        <div class="form-row-3">
+          <input type="text" name="city" placeholder="City" autocomplete="address-level2" required />
+          <input type="text" name="state" placeholder="State" autocomplete="address-level1" required />
+          <input type="text" name="zip" placeholder="ZIP" autocomplete="postal-code" required />
+        </div>
+
+        <hr class="form-divider" />
+        <label class="form-label">Payment</label>
+        <div id="sq-card"></div>
+        <div id="checkout-error" class="checkout-error" hidden></div>
+        <button type="submit" class="btn-primary" id="pay-btn" style="width:100%">Pay $0.00</button>
+      </form>
+
+      <div id="checkout-confirm" class="checkout-confirm" hidden>
+        <div class="checkout-confirm__icon">🦤</div>
+        <p class="checkout-confirm__title">Order confirmed!</p>
+        <p class="checkout-confirm__body">Receipt sent to <strong id="confirm-email"></strong>.<br>Your krill are on their way.</p>
+        <a id="confirm-receipt" class="checkout-confirm__receipt" target="_blank" rel="noopener">View receipt →</a>
+      </div>
     </div>
   </div>
 
@@ -186,70 +312,102 @@
       </div>
       <div class="product-grid">
 
-        <article class="product-card">
+        <article class="product-card" data-product-id="femme-krilly" data-product-name="Femme Krilly" data-price-cents="4800">
           <div class="product-card__img-wrap">
             <img src="assets/product-femme-krilly-1.jpg" alt="Femme Krilly Tee" loading="lazy" />
             <div class="product-card__overlay">
-              <a href="#" class="product-card__add">
+              <button class="product-card__add" data-action="add-to-cart" aria-label="Add Femme Krilly to cart">
                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                 Add to Cart
-              </a>
+              </button>
             </div>
           </div>
           <div class="product-card__body">
             <h3 class="product-card__name">Femme Krilly</h3>
             <p class="product-card__desc">Femme fit</p>
+            <div class="size-picker" role="group" aria-label="Select size">
+              <button type="button" class="size-btn" data-size="XS">XS</button>
+              <button type="button" class="size-btn" data-size="S">S</button>
+              <button type="button" class="size-btn" data-size="M">M</button>
+              <button type="button" class="size-btn" data-size="L">L</button>
+              <button type="button" class="size-btn" data-size="XL">XL</button>
+            </div>
+            <p class="size-hint" aria-live="polite"></p>
             <p class="product-card__price">$48</p>
           </div>
         </article>
 
-        <article class="product-card">
+        <article class="product-card" data-product-id="unisex-krilly" data-product-name="Unisex Krilly" data-price-cents="4800">
           <div class="product-card__img-wrap">
             <img src="assets/product-unisex-krilly-2.jpg" alt="Unisex Krilly Tee" loading="lazy" />
             <div class="product-card__overlay">
-              <a href="#" class="product-card__add">
+              <button class="product-card__add" data-action="add-to-cart" aria-label="Add Unisex Krilly to cart">
                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                 Add to Cart
-              </a>
+              </button>
             </div>
           </div>
           <div class="product-card__body">
             <h3 class="product-card__name">Unisex Krilly</h3>
             <p class="product-card__desc">Unisex fit</p>
+            <div class="size-picker" role="group" aria-label="Select size">
+              <button type="button" class="size-btn" data-size="S">S</button>
+              <button type="button" class="size-btn" data-size="M">M</button>
+              <button type="button" class="size-btn" data-size="L">L</button>
+              <button type="button" class="size-btn" data-size="XL">XL</button>
+              <button type="button" class="size-btn" data-size="2XL">2XL</button>
+            </div>
+            <p class="size-hint" aria-live="polite"></p>
             <p class="product-card__price">$48</p>
           </div>
         </article>
 
-        <article class="product-card">
+        <article class="product-card" data-product-id="smol-fries-crop" data-product-name="Smol Fries Crop" data-price-cents="4400">
           <div class="product-card__img-wrap">
             <img src="assets/product-smol-fries-1.jpg" alt="Smol Fries Crop Tee" loading="lazy" />
             <div class="product-card__overlay">
-              <a href="#" class="product-card__add">
+              <button class="product-card__add" data-action="add-to-cart" aria-label="Add Smol Fries Crop to cart">
                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                 Add to Cart
-              </a>
+              </button>
             </div>
           </div>
           <div class="product-card__body">
             <h3 class="product-card__name">Smol Fries Crop</h3>
             <p class="product-card__desc">Crop fit</p>
+            <div class="size-picker" role="group" aria-label="Select size">
+              <button type="button" class="size-btn" data-size="XS">XS</button>
+              <button type="button" class="size-btn" data-size="S">S</button>
+              <button type="button" class="size-btn" data-size="M">M</button>
+              <button type="button" class="size-btn" data-size="L">L</button>
+              <button type="button" class="size-btn" data-size="XL">XL</button>
+            </div>
+            <p class="size-hint" aria-live="polite"></p>
             <p class="product-card__price">$44</p>
           </div>
         </article>
 
-        <article class="product-card">
+        <article class="product-card" data-product-id="smol-fries-pocket" data-product-name="Smol Fries Pocket" data-price-cents="4400">
           <div class="product-card__img-wrap">
             <img src="assets/product-smol-fries-pocket-1.jpg" alt="Smol Fries Pocket Tee" loading="lazy" />
             <div class="product-card__overlay">
-              <a href="#" class="product-card__add">
+              <button class="product-card__add" data-action="add-to-cart" aria-label="Add Smol Fries Pocket to cart">
                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                 Add to Cart
-              </a>
+              </button>
             </div>
           </div>
           <div class="product-card__body">
             <h3 class="product-card__name">Smol Fries Pocket</h3>
             <p class="product-card__desc">Pocket tee</p>
+            <div class="size-picker" role="group" aria-label="Select size">
+              <button type="button" class="size-btn" data-size="S">S</button>
+              <button type="button" class="size-btn" data-size="M">M</button>
+              <button type="button" class="size-btn" data-size="L">L</button>
+              <button type="button" class="size-btn" data-size="XL">XL</button>
+              <button type="button" class="size-btn" data-size="2XL">2XL</button>
+            </div>
+            <p class="size-hint" aria-live="polite"></p>
             <p class="product-card__price">$44</p>
           </div>
         </article>
@@ -396,6 +554,179 @@
       }, { passive: true });
       setInterval(function () { if (!paused) goTo(index + 1); }, 3500);
     })();
+
+    // ── Square + cart config ──────────────────────────────────────────────
+    // TODO: replace placeholders with your real Square credentials
+    // Application ID: Square Developer Dashboard → your app → Credentials
+    // Location ID: Square Dashboard → Account & Settings → Business → Locations
+    var SQUARE_APP_ID      = 'YOUR_SQUARE_APP_ID';
+    var SQUARE_LOCATION_ID = 'YOUR_SQUARE_LOCATION_ID';
+    var WORKER_URL = 'https://webbie-catalog.bywebbie.workers.dev';
+
+    // ── Cart state (persisted to localStorage) ───────────────────────────
+    function loadCart() {
+      try { return JSON.parse(localStorage.getItem('webbie-cart')) || []; } catch { return []; }
+    }
+    function saveCart(cart) { localStorage.setItem('webbie-cart', JSON.stringify(cart)); }
+    function cartTotal(cart) { return cart.reduce(function(s, i) { return s + i.priceCents * i.qty; }, 0); }
+    function fmtMoney(cents) { return '$' + (cents / 100).toFixed(2); }
+
+    function updateBadge(cart) {
+      var total = cart.reduce(function(s, i) { return s + i.qty; }, 0);
+      var badge = document.getElementById('cart-count');
+      badge.textContent = total;
+      badge.hidden = total === 0;
+    }
+
+    function renderCart() {
+      var cart = loadCart();
+      var el = document.getElementById('cart-items');
+      updateBadge(cart);
+      document.getElementById('cart-subtotal').textContent = fmtMoney(cartTotal(cart));
+      if (!cart.length) {
+        el.innerHTML = '<p class="cart-empty">Your cart is empty.<br>Add something from the deep.</p>';
+        return;
+      }
+      el.innerHTML = cart.map(function(item, idx) {
+        return '<div class="cart-item">' +
+          '<div class="cart-item__info">' +
+            '<p class="cart-item__name">' + item.name + '</p>' +
+            '<p class="cart-item__meta">Size: ' + item.size + ' &mdash; Qty: ' + item.qty + '</p>' +
+          '</div>' +
+          '<span class="cart-item__price">' + fmtMoney(item.priceCents * item.qty) + '</span>' +
+          '<button class="cart-item__remove" data-remove="' + idx + '" aria-label="Remove ' + item.name + '">&times;</button>' +
+        '</div>';
+      }).join('');
+      el.querySelectorAll('[data-remove]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var cart = loadCart();
+          cart.splice(parseInt(btn.dataset.remove), 1);
+          saveCart(cart); renderCart();
+        });
+      });
+    }
+
+    // ── Size picker logic ────────────────────────────────────────────────
+    document.querySelectorAll('.product-card').forEach(function(card) {
+      var sizeBtns = card.querySelectorAll('.size-btn');
+      sizeBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          sizeBtns.forEach(function(b) { b.classList.remove('selected'); });
+          btn.classList.add('selected');
+          card.dataset.selectedSize = btn.dataset.size;
+          card.querySelector('.size-hint').textContent = '';
+        });
+      });
+    });
+
+    // ── Add to cart ──────────────────────────────────────────────────────
+    document.querySelectorAll('[data-action="add-to-cart"]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var card = btn.closest('.product-card');
+        var size = card.dataset.selectedSize;
+        var hint = card.querySelector('.size-hint');
+        if (!size) { hint.textContent = 'Select a size first'; return; }
+        hint.textContent = '';
+        var id = card.dataset.productId;
+        var name = card.dataset.productName;
+        var priceCents = parseInt(card.dataset.priceCents);
+        var cart = loadCart();
+        var existing = cart.find(function(i) { return i.id === id && i.size === size; });
+        if (existing) { existing.qty += 1; } else { cart.push({ id: id, name: name, size: size, priceCents: priceCents, qty: 1 }); }
+        saveCart(cart); renderCart();
+        openCartDrawer();
+      });
+    });
+
+    // ── Cart drawer ──────────────────────────────────────────────────────
+    function openCartDrawer() { document.getElementById('cart-drawer').classList.add('open'); document.body.style.overflow = 'hidden'; renderCart(); }
+    function closeCartDrawer() { document.getElementById('cart-drawer').classList.remove('open'); document.body.style.overflow = ''; }
+    document.getElementById('cart-open').addEventListener('click', openCartDrawer);
+    document.getElementById('cart-close').addEventListener('click', closeCartDrawer);
+    document.getElementById('cart-backdrop').addEventListener('click', closeCartDrawer);
+
+    // ── Checkout modal ───────────────────────────────────────────────────
+    var sqCard = null;
+
+    async function openCheckout() {
+      var cart = loadCart();
+      if (!cart.length) return;
+      closeCartDrawer();
+      document.getElementById('checkout-modal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+      document.getElementById('checkout-confirm').hidden = true;
+      document.getElementById('checkout-form').hidden = false;
+      document.getElementById('pay-btn').textContent = 'Pay ' + fmtMoney(cartTotal(cart));
+      document.getElementById('checkout-error').hidden = true;
+      if (!sqCard && typeof Square !== 'undefined') {
+        try {
+          var payments = Square.payments(SQUARE_APP_ID, SQUARE_LOCATION_ID);
+          sqCard = await payments.card();
+          await sqCard.attach('#sq-card');
+        } catch(e) { console.error('Square init failed:', e); }
+      }
+    }
+
+    function closeCheckout() {
+      document.getElementById('checkout-modal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('checkout-open').addEventListener('click', openCheckout);
+    document.getElementById('checkout-modal-close').addEventListener('click', closeCheckout);
+    document.getElementById('checkout-backdrop').addEventListener('click', closeCheckout);
+
+    document.getElementById('checkout-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      var form = e.target;
+      var payBtn = document.getElementById('pay-btn');
+      var errEl = document.getElementById('checkout-error');
+      if (!sqCard) { errEl.textContent = 'Payment form not ready. Please refresh and try again.'; errEl.hidden = false; return; }
+      payBtn.disabled = true; payBtn.textContent = 'Processing…';
+      errEl.hidden = true;
+      try {
+        var result = await sqCard.tokenize();
+        if (result.status !== 'OK') {
+          var msgs = (result.errors || []).map(function(er) { return er.message; }).join(' ');
+          throw new Error(msgs || 'Card tokenization failed');
+        }
+        var cart = loadCart();
+        var buyer = {
+          name: form.fullName.value.trim(),
+          email: form.email.value.trim(),
+          address1: form.address1.value.trim(),
+          city: form.city.value.trim(),
+          state: form.state.value.trim(),
+          zip: form.zip.value.trim(),
+        };
+        var resp = await fetch(WORKER_URL + '/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sourceId: result.token, cart: cart, buyer: buyer }),
+        });
+        var data = await resp.json();
+        if (!resp.ok || !data.success) throw new Error(data.error || 'Payment failed');
+        saveCart([]);
+        renderCart();
+        form.hidden = true;
+        document.getElementById('confirm-email').textContent = buyer.email;
+        var receiptLink = document.getElementById('confirm-receipt');
+        if (data.receiptUrl) { receiptLink.href = data.receiptUrl; receiptLink.hidden = false; } else { receiptLink.hidden = true; }
+        document.getElementById('checkout-confirm').hidden = false;
+      } catch(err) {
+        errEl.textContent = err.message;
+        errEl.hidden = false;
+        payBtn.disabled = false;
+        payBtn.textContent = 'Pay ' + fmtMoney(cartTotal(loadCart()));
+      }
+    });
+
+    // Close modals on ESC
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') { closeCartDrawer(); closeCheckout(); }
+    });
+
+    renderCart();
 
     // Bioluminescent krill — GoL simulation; hidden on touch via CSS
     (function () {
