@@ -136,6 +136,12 @@
     @media (max-width: 36rem) { .product-grid { grid-template-columns: 1fr; } }
     /* Hide krill on genuine touch-only devices */
     @media (pointer: coarse) and (hover: none) { .krill-el { display: none !important; } }
+    /* Product loading skeleton */
+    .product-skeleton { min-height: 360px; border-radius: var(--radius); background: linear-gradient(90deg, var(--w-card) 25%, color-mix(in oklab, var(--w-card) 50%, var(--w-border)) 50%, var(--w-card) 75%); background-size: 200% 100%; animation: shimmer 1.6s infinite; }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    /* Product skeleton loading state */
+    .product-skeleton { min-height: 360px; border-radius: var(--radius); background: linear-gradient(90deg, var(--w-card) 25%, color-mix(in oklab, var(--w-card) 50%, var(--w-border)) 50%, var(--w-card) 75%); background-size: 200% 100%; animation: shimmer 1.6s infinite; }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
     /* ── Cart nav button ── */
     .cart-btn { background: none; border: 1px solid var(--w-border); border-radius: var(--radius); padding: 0.4rem 0.65rem; cursor: pointer; color: var(--w-muted-fg); display: flex; align-items: center; gap: 0.4rem; font-family: var(--w-font-body); font-size: 0.8rem; transition: border-color 0.15s, color 0.15s; flex-shrink: 0; }
@@ -310,108 +316,11 @@
           <p class="section-sub">Curated drops from the deep.</p>
         </div>
       </div>
-      <div class="product-grid">
-
-        <article class="product-card" data-product-id="femme-krilly" data-product-name="Femme Krilly" data-price-cents="4800">
-          <div class="product-card__img-wrap">
-            <img src="assets/product-femme-krilly-1.jpg" alt="Femme Krilly Tee" loading="lazy" />
-            <div class="product-card__overlay">
-              <button class="product-card__add" data-action="add-to-cart" aria-label="Add Femme Krilly to cart">
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                Add to Cart
-              </button>
-            </div>
-          </div>
-          <div class="product-card__body">
-            <h3 class="product-card__name">Femme Krilly</h3>
-            <p class="product-card__desc">Femme fit</p>
-            <div class="size-picker" role="group" aria-label="Select size">
-              <button type="button" class="size-btn" data-size="XS">XS</button>
-              <button type="button" class="size-btn" data-size="S">S</button>
-              <button type="button" class="size-btn" data-size="M">M</button>
-              <button type="button" class="size-btn" data-size="L">L</button>
-              <button type="button" class="size-btn" data-size="XL">XL</button>
-            </div>
-            <p class="size-hint" aria-live="polite"></p>
-            <p class="product-card__price">$48</p>
-          </div>
-        </article>
-
-        <article class="product-card" data-product-id="unisex-krilly" data-product-name="Unisex Krilly" data-price-cents="4800">
-          <div class="product-card__img-wrap">
-            <img src="assets/product-unisex-krilly-2.jpg" alt="Unisex Krilly Tee" loading="lazy" />
-            <div class="product-card__overlay">
-              <button class="product-card__add" data-action="add-to-cart" aria-label="Add Unisex Krilly to cart">
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                Add to Cart
-              </button>
-            </div>
-          </div>
-          <div class="product-card__body">
-            <h3 class="product-card__name">Unisex Krilly</h3>
-            <p class="product-card__desc">Unisex fit</p>
-            <div class="size-picker" role="group" aria-label="Select size">
-              <button type="button" class="size-btn" data-size="S">S</button>
-              <button type="button" class="size-btn" data-size="M">M</button>
-              <button type="button" class="size-btn" data-size="L">L</button>
-              <button type="button" class="size-btn" data-size="XL">XL</button>
-              <button type="button" class="size-btn" data-size="2XL">2XL</button>
-            </div>
-            <p class="size-hint" aria-live="polite"></p>
-            <p class="product-card__price">$48</p>
-          </div>
-        </article>
-
-        <article class="product-card" data-product-id="smol-fries-crop" data-product-name="Smol Fries Crop" data-price-cents="4400">
-          <div class="product-card__img-wrap">
-            <img src="assets/product-smol-fries-1.jpg" alt="Smol Fries Crop Tee" loading="lazy" />
-            <div class="product-card__overlay">
-              <button class="product-card__add" data-action="add-to-cart" aria-label="Add Smol Fries Crop to cart">
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                Add to Cart
-              </button>
-            </div>
-          </div>
-          <div class="product-card__body">
-            <h3 class="product-card__name">Smol Fries Crop</h3>
-            <p class="product-card__desc">Crop fit</p>
-            <div class="size-picker" role="group" aria-label="Select size">
-              <button type="button" class="size-btn" data-size="XS">XS</button>
-              <button type="button" class="size-btn" data-size="S">S</button>
-              <button type="button" class="size-btn" data-size="M">M</button>
-              <button type="button" class="size-btn" data-size="L">L</button>
-              <button type="button" class="size-btn" data-size="XL">XL</button>
-            </div>
-            <p class="size-hint" aria-live="polite"></p>
-            <p class="product-card__price">$44</p>
-          </div>
-        </article>
-
-        <article class="product-card" data-product-id="smol-fries-pocket" data-product-name="Smol Fries Pocket" data-price-cents="4400">
-          <div class="product-card__img-wrap">
-            <img src="assets/product-smol-fries-pocket-1.jpg" alt="Smol Fries Pocket Tee" loading="lazy" />
-            <div class="product-card__overlay">
-              <button class="product-card__add" data-action="add-to-cart" aria-label="Add Smol Fries Pocket to cart">
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                Add to Cart
-              </button>
-            </div>
-          </div>
-          <div class="product-card__body">
-            <h3 class="product-card__name">Smol Fries Pocket</h3>
-            <p class="product-card__desc">Pocket tee</p>
-            <div class="size-picker" role="group" aria-label="Select size">
-              <button type="button" class="size-btn" data-size="S">S</button>
-              <button type="button" class="size-btn" data-size="M">M</button>
-              <button type="button" class="size-btn" data-size="L">L</button>
-              <button type="button" class="size-btn" data-size="XL">XL</button>
-              <button type="button" class="size-btn" data-size="2XL">2XL</button>
-            </div>
-            <p class="size-hint" aria-live="polite"></p>
-            <p class="product-card__price">$44</p>
-          </div>
-        </article>
-
+      <div class="product-grid" id="product-grid">
+        <div class="product-skeleton" aria-hidden="true"></div>
+        <div class="product-skeleton" aria-hidden="true"></div>
+        <div class="product-skeleton" aria-hidden="true"></div>
+        <div class="product-skeleton" aria-hidden="true"></div>
       </div>
     </div>
   </section>
@@ -606,37 +515,96 @@
       });
     }
 
-    // ── Size picker logic ────────────────────────────────────────────────
-    document.querySelectorAll('.product-card').forEach(function(card) {
-      var sizeBtns = card.querySelectorAll('.size-btn');
-      sizeBtns.forEach(function(btn) {
-        btn.addEventListener('click', function() {
-          sizeBtns.forEach(function(b) { b.classList.remove('selected'); });
-          btn.classList.add('selected');
-          card.dataset.selectedSize = btn.dataset.size;
-          card.querySelector('.size-hint').textContent = '';
+    // ── Product rendering ────────────────────────────────────────────────
+    function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+    function slugify(s) { return s.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,''); }
+
+    // Local images keyed by item name slug; used as fallback when Square has no image
+    var LOCAL_IMAGES = {
+      'femme-krilly': 'assets/product-femme-krilly-1.jpg',
+      'unisex-krilly': 'assets/product-unisex-krilly-2.jpg',
+      'smol-fries-crop': 'assets/product-smol-fries-1.jpg',
+      'smol-fries-pocket': 'assets/product-smol-fries-pocket-1.jpg',
+    };
+
+    function bindProductCards() {
+      document.querySelectorAll('.product-card').forEach(function(card) {
+        var sizeBtns = card.querySelectorAll('.size-btn');
+        sizeBtns.forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            sizeBtns.forEach(function(b) { b.classList.remove('selected'); });
+            btn.classList.add('selected');
+            card.dataset.selectedSize = btn.dataset.size;
+            card.dataset.selectedVariationId = btn.dataset.variationId || '';
+            card.querySelector('.size-hint').textContent = '';
+          });
         });
       });
-    });
-
-    // ── Add to cart ──────────────────────────────────────────────────────
-    document.querySelectorAll('[data-action="add-to-cart"]').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        var card = btn.closest('.product-card');
-        var size = card.dataset.selectedSize;
-        var hint = card.querySelector('.size-hint');
-        if (!size) { hint.textContent = 'Select a size first'; return; }
-        hint.textContent = '';
-        var id = card.dataset.productId;
-        var name = card.dataset.productName;
-        var priceCents = parseInt(card.dataset.priceCents);
-        var cart = loadCart();
-        var existing = cart.find(function(i) { return i.id === id && i.size === size; });
-        if (existing) { existing.qty += 1; } else { cart.push({ id: id, name: name, size: size, priceCents: priceCents, qty: 1 }); }
-        saveCart(cart); renderCart();
-        openCartDrawer();
+      document.querySelectorAll('[data-action="add-to-cart"]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var card = btn.closest('.product-card');
+          var size = card.dataset.selectedSize;
+          var hint = card.querySelector('.size-hint');
+          if (!size) { hint.textContent = 'Select a size first'; return; }
+          hint.textContent = '';
+          var cart = loadCart();
+          var existing = cart.find(function(i) { return i.id === card.dataset.productId && i.size === size; });
+          if (existing) { existing.qty += 1; } else {
+            cart.push({
+              id: card.dataset.productId,
+              variationId: card.dataset.selectedVariationId || '',
+              name: card.dataset.productName,
+              size: size,
+              priceCents: parseInt(card.dataset.priceCents),
+              qty: 1,
+            });
+          }
+          saveCart(cart); renderCart();
+          openCartDrawer();
+        });
       });
-    });
+    }
+
+    function renderProducts(items) {
+      var grid = document.getElementById('product-grid');
+      if (!items || !items.length) {
+        grid.innerHTML = '<p style="color:var(--w-muted-fg);font-family:var(--w-font-body);padding:2rem 0">No products available yet.</p>';
+        return;
+      }
+      var BAG = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>';
+      grid.innerHTML = items.map(function(item) {
+        var img = LOCAL_IMAGES[slugify(item.name)] || item.imageUrl || '';
+        var price = '$' + (item.priceCents / 100).toFixed(0);
+        var sizeBtns = item.variations.map(function(v) {
+          return '<button type="button" class="size-btn" data-size="' + escHtml(v.name) + '" data-variation-id="' + escHtml(v.id) + '">' + escHtml(v.name) + '</button>';
+        }).join('');
+        return '<article class="product-card" data-product-id="' + escHtml(item.id) + '" data-product-name="' + escHtml(item.name) + '" data-price-cents="' + item.priceCents + '">' +
+          '<div class="product-card__img-wrap">' +
+            (img ? '<img src="' + escHtml(img) + '" alt="' + escHtml(item.name) + '" loading="lazy" />' : '') +
+            '<div class="product-card__overlay">' +
+              '<button class="product-card__add" data-action="add-to-cart" aria-label="Add ' + escHtml(item.name) + ' to cart">' + BAG + 'Add to Cart</button>' +
+            '</div>' +
+          '</div>' +
+          '<div class="product-card__body">' +
+            '<h3 class="product-card__name">' + escHtml(item.name) + '</h3>' +
+            (item.description ? '<p class="product-card__desc">' + escHtml(item.description) + '</p>' : '') +
+            '<div class="size-picker" role="group" aria-label="Select size">' + sizeBtns + '</div>' +
+            '<p class="size-hint" aria-live="polite"></p>' +
+            '<p class="product-card__price">' + escHtml(price) + '</p>' +
+          '</div>' +
+        '</article>';
+      }).join('');
+      bindProductCards();
+    }
+
+    // Fetch live catalog from worker on page load
+    fetch(WORKER_URL + '/catalog')
+      .then(function(r) { return r.json(); })
+      .then(function(d) { renderProducts(d.items || []); })
+      .catch(function() {
+        document.getElementById('product-grid').innerHTML =
+          '<p style="color:var(--w-muted-fg);font-family:var(--w-font-body);padding:2rem 0">Unable to load products. Please try again later.</p>';
+      });
 
     // ── Cart drawer ──────────────────────────────────────────────────────
     function openCartDrawer() { document.getElementById('cart-drawer').classList.add('open'); document.body.style.overflow = 'hidden'; renderCart(); }
