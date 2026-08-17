@@ -137,8 +137,10 @@
       .specimen-card { flex-basis: calc(82% - 0.75rem); }
     }
     @media (max-width: 36rem) { .product-grid { grid-template-columns: 1fr; } }
-    /* Hide krill on genuine touch-only devices */
+    /* Hide cursor krill on genuine touch-only devices */
     @media (pointer: coarse) and (hover: none) { .krill-el { display: none !important; } }
+    /* Ambient background krill */
+    .krill-ambient { position: fixed; pointer-events: none; z-index: 0; opacity: 0; filter: drop-shadow(0 0 7px rgba(0,199,177,0.75)); will-change: transform, opacity; }
     /* Product loading skeleton */
     .product-skeleton { min-height: 360px; border-radius: var(--radius); background: linear-gradient(90deg, var(--w-card) 25%, color-mix(in oklab, var(--w-card) 50%, var(--w-border)) 50%, var(--w-card) 75%); background-size: 200% 100%; animation: shimmer 1.6s infinite; }
     @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
@@ -788,6 +790,53 @@
         }
         requestAnimationFrame(render);
       })();
+    })();
+
+    // Ambient bioluminescent krill — drift upward through the background
+    (function () {
+      var COUNT = 22;
+      var KRILL_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 10" width="18" height="9"><ellipse cx="10" cy="5" rx="6.5" ry="2.2" fill="rgba(0,199,177,0.9)"/><line x1="3.5" y1="5" x2="0.5" y2="3" stroke="rgba(0,213,190,0.8)" stroke-width="0.9"/><line x1="3.5" y1="5" x2="0.5" y2="7" stroke="rgba(0,213,190,0.8)" stroke-width="0.9"/><line x1="16.5" y1="5" x2="19.5" y2="3" stroke="rgba(0,213,190,0.8)" stroke-width="0.9"/><line x1="16.5" y1="5" x2="19.5" y2="7" stroke="rgba(0,213,190,0.8)" stroke-width="0.9"/><circle cx="3.5" cy="4.5" r="0.9" fill="rgba(120,255,235,1)"/></svg>';
+
+      var pool = [];
+      for (var i = 0; i < COUNT; i++) {
+        var el = document.createElement('div');
+        el.innerHTML = KRILL_SVG;
+        el.className = 'krill-ambient';
+        document.body.appendChild(el);
+        pool.push({
+          el: el,
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * window.innerHeight,
+          // upward drift with slight horizontal wobble
+          vy: -(0.12 + Math.random() * 0.18),
+          vx: (Math.random() - 0.5) * 0.08,
+          // independent fade cycle per krill
+          fadePhase: Math.random() * Math.PI * 2,
+          fadePeriod: 5000 + Math.random() * 7000,
+          maxOpacity: 0.18 + Math.random() * 0.18,
+        });
+      }
+
+      var last = performance.now();
+      (function tick(now) {
+        var dt = Math.min(now - last, 50);
+        last = now;
+        for (var i = 0; i < pool.length; i++) {
+          var k = pool[i];
+          k.x += k.vx * dt;
+          k.y += k.vy * dt;
+          k.fadePhase += (dt / k.fadePeriod) * Math.PI * 2;
+          // wrap off top → reset at bottom
+          if (k.y < -20) {
+            k.y = window.innerHeight + 20;
+            k.x = Math.random() * window.innerWidth;
+          }
+          var opacity = ((Math.sin(k.fadePhase) + 1) / 2) * k.maxOpacity;
+          k.el.style.transform = 'translate(' + (k.x - 9) + 'px,' + (k.y - 4.5) + 'px)';
+          k.el.style.opacity = opacity;
+        }
+        requestAnimationFrame(tick);
+      })(performance.now());
     })();
   </script>
 
